@@ -5,7 +5,7 @@ public class Main {
 
     public static void main(String[] args) {
         FileReading fr=new FileReading();
-        List<String[]> dataPoints = fr.readingDataPoints("/Users/neha/Desktop/NEU/SEM 2/PSA/Project/crimeSample.csv");
+        List<String[]> dataPoints = fr.readingDataPoints("./src/main/java/crimeSample.csv");
 
         if(dataPoints.size()==0)
             System.out.println("Error");
@@ -31,7 +31,9 @@ public class Main {
 
             Graph g = new Graph(v);
             Edge [] primsResult = g.getPrimMST(distanceCostMatrix,v) ;
-            System.out.println("hey");
+
+
+            //System.out.println("hey");
 
             //algos to be implemented
 

@@ -11,9 +11,11 @@ public class TravellerData{
 
     public static List<City> putCitiesInList(List<String[]> data){
 
+        int c=0;
         for (String[] row : data) {
-            City city=new City(row[0],Double.parseDouble(row[1]),Double.parseDouble(row[2]));
+            City city=new City(row[0],Double.parseDouble(row[1]),Double.parseDouble(row[2]),c);
             cities.add(city);
+            c++;
         }
 //        for(City c:cities){
 //            System.out.println(c.toString());

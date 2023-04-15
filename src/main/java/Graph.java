@@ -41,6 +41,19 @@ public class Graph {
         adjList[v].remove(u);
     }
 
+    int minKey(double cost[], boolean visited[]) {
+
+        double min = Double.MAX_VALUE;
+        int min_index = -1;
+
+        for ( int v = 0; v < V; v++) {
+            if (visited[v] == false && cost[v] < min) {
+                min = cost[v];
+                min_index = v;
+            }
+        }
+        return min_index;
+    }
     Edge[] getPrimMST(double distanceCostMatrix[][],int V){
         //Tour chosen for MST
         int path[] = new int[V];
@@ -53,12 +66,12 @@ public class Graph {
 
         // Initialize all keys as INFINITE
         for (int i = 0; i < V; i++) {
-            cost[i] = Integer.MAX_VALUE;
+            cost[i] = Double.MAX_VALUE;
             visited[i] = false;
         }
 
         // Always include first 1st vertex in MST.
-        cost[0] = 0; // Make key 0 so that this vertex is
+        cost[0] = 0.0; // Make key 0 so that this vertex is
         // picked as first vertex
         path[0] = -1; // First node is always root of MST
 
@@ -66,15 +79,8 @@ public class Graph {
         for (int count = 0; count < V - 1; count++) {
 
             //To choose the next vertex
-            double min = Integer.MAX_VALUE; int u = -1;
-
-            for ( int v = 0; v < V; v++) {
-                if (visited[v] == false && cost[v] < min) {
-                    min = cost[v];
-                    u = v;
-                }
-            }
-
+            int u=minKey(cost,visited);
+            visited[u]=true;
             // Update key value and parent index of the adjacent
             // vertices of the picked vertex. Consider only those
             // vertices which are not yet included in MST
@@ -96,6 +102,7 @@ public class Graph {
             mst[i].src = path[i];
             mst[i].dest = i;
             mst[i].edgeWeight = distanceCostMatrix[i][path[i]];
+            //System.out.println(mst[i].src+"->"+mst[i].dest+"{"+mst[i].edgeWeight +"}");
         }
         return mst;
     }

@@ -4,6 +4,7 @@ public class City{
     private String cityName;
     private double x;
     private double y;
+    private int index;
 
     public String getCityName() {
         return cityName;
@@ -29,11 +30,19 @@ public class City{
         this.y = y;
     }
 
+    public int getIndex() {
+        return index;
+    }
 
-    public City(String cityName, double x, double y) {
+    public void setIndex(int index) {
+        this.index = index;
+    }
+
+    public City(String cityName, double x, double y,int index) {
         this.cityName = cityName;
         this.x = x;
         this.y = y;
+        this.index = index;
     }
 
     @Override
@@ -42,9 +51,7 @@ public class City{
                 "cityName='" + cityName + '\'' +
                 ", x=" + x +
                 ", y=" + y +
+                ", index=" + index +
                 '}';
     }
-
-
-
 }
