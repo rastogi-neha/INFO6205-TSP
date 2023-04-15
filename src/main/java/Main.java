@@ -32,8 +32,10 @@ public class Main {
             Graph g = new Graph(v);
             Edge [] primsResult = g.getPrimMST(distanceCostMatrix,v) ;
 
+            Edge [] mst = g.findAndAddPerfectMatches(primsResult,cities);
 
-            //System.out.println("hey");
+
+            System.out.println("hey");
 
             //algos to be implemented
 

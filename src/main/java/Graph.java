@@ -41,7 +41,98 @@ public class Graph {
         adjList[v].remove(u);
     }
 
-    int minKey(double cost[], boolean visited[]) {
+    Edge[] findAndAddPerfectMatches(Edge[] mst,List<City> cities){
+        int[] neighbouringVerticesOnMST = new int[V];
+
+        for(int i = 1 ; i < mst.length ; i++) {
+            int src = mst[i].src;
+            int dest = mst[i].dest;
+            neighbouringVerticesOnMST[src]++;
+            neighbouringVerticesOnMST[dest]++;
+        }
+
+        ArrayList<Edge> newEdgesForOddVertexs = new ArrayList<Edge>();
+        List<City> oddDegreeVertex = new ArrayList<>();
+
+        for(int i = 0 ; i < neighbouringVerticesOnMST.length ; i++) {
+            if(neighbouringVerticesOnMST[i] % 2 == 1) {
+                oddDegreeVertex.add(cities.get(i));
+            }
+        }
+        findMatchesWithNearestNeighbour(oddDegreeVertex,newEdgesForOddVertexs);
+
+        //merging new edges into mst so all nodes have even number edge now
+        Edge[] newEdges = newEdgesForOddVertexs.toArray(new Edge[0]);
+        int fal = mst.length-1;        //determines length of firstArray
+        int sal = newEdges.length;   //determines length of secondArray
+        Edge[] result = new Edge[fal + sal];  //resultant array of size first array and second array
+        System.arraycopy(mst, 0, result, 0, fal);
+        System.arraycopy(newEdges, 0, result, fal, sal);
+
+        int[] neighbourCounterOnMST2 = new int[V];
+
+        for (int i = 1; i < fal+sal; ++i) {
+            int src = result[i].src;
+            int dest = result[i].dest;
+            neighbourCounterOnMST2[src]++;
+            neighbourCounterOnMST2[dest]++;
+
+        }
+        return result;
+    }
+
+    void findMatchesWithNearestNeighbour(List<City> oddDegreeVertex, ArrayList<Edge> newEdgesForOddVertexs) {
+
+        int nextCityIndex=0,indexForRemove=0;
+        double distance,min=Double.MAX_VALUE;
+        TravellerData td=new TravellerData();
+        Edge oddDegreeEdge;
+
+        City temp,temp2;
+        for(int i=0 ;  i < oddDegreeVertex.size() ;i=nextCityIndex) {
+
+            temp=oddDegreeVertex.get(i);
+
+            oddDegreeVertex.remove(i);
+
+            for (int k = 0; k < oddDegreeVertex.size(); k++) {
+                temp2 = oddDegreeVertex.get(k);
+                distance =td.getDistance(temp,temp2);
+
+                if(distance<min ) {
+                    min=distance;
+                    nextCityIndex=0;
+                    indexForRemove=k;
+                }
+            }
+
+            temp2=oddDegreeVertex.get(indexForRemove);
+            oddDegreeEdge = new Edge();
+            oddDegreeEdge.src = temp.getIndex();
+            oddDegreeEdge.dest = temp2.getIndex();
+            oddDegreeEdge.edgeWeight = min;
+            newEdgesForOddVertexs.add(oddDegreeEdge);
+
+            min=Integer.MAX_VALUE;
+            oddDegreeVertex.remove(indexForRemove);
+
+            if(oddDegreeVertex.size()==2){
+                oddDegreeEdge = new Edge();
+                oddDegreeEdge.src = oddDegreeVertex.get(0).getIndex();
+                oddDegreeEdge.dest = oddDegreeVertex.get(1).getIndex();
+                oddDegreeEdge.edgeWeight = td.getDistance(oddDegreeVertex.get(0),oddDegreeVertex.get(1));
+                newEdgesForOddVertexs.add(oddDegreeEdge);
+                break;
+            }
+
+        }
+
+    }
+
+
+
+
+    int minKey(double [] cost, boolean visited[]) {
 
         double min = Double.MAX_VALUE;
         int min_index = -1;
@@ -56,13 +147,13 @@ public class Graph {
     }
     Edge[] getPrimMST(double distanceCostMatrix[][],int V){
         //Tour chosen for MST
-        int path[] = new int[V];
+        int [] path = new int[V];
 
         //Cost of picking vertex
-        double cost[] = new double[V];
+        double [] cost = new double[V];
 
         //Set of visited vertices
-        boolean visited[] = new boolean[V];
+        boolean [] visited = new boolean[V];
 
         // Initialize all keys as INFINITE
         for (int i = 0; i < V; i++) {
@@ -102,7 +193,7 @@ public class Graph {
             mst[i].src = path[i];
             mst[i].dest = i;
             mst[i].edgeWeight = distanceCostMatrix[i][path[i]];
-            //System.out.println(mst[i].src+"->"+mst[i].dest+"{"+mst[i].edgeWeight +"}");
+            System.out.println(mst[i].src+"->"+mst[i].dest+"{"+mst[i].edgeWeight +"}");
         }
         return mst;
     }
