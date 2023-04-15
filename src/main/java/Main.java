@@ -15,7 +15,7 @@ public class Main {
 
             List<City> cities = td.putCitiesInList(dataPoints);
             int v=td.getNumberOfCities();
-            int e;
+            int e=0;
 
             //distanceMatrix computed
             double[][] distanceCostMatrix=new double[v][v];
@@ -29,11 +29,20 @@ public class Main {
                 }
             }
 
-            Graph g = new Graph(v);
+            Graph g = new Graph(v,e);
             Edge [] primsResult = g.getPrimMST(distanceCostMatrix,v) ;
 
             Edge [] mst = g.findAndAddPerfectMatches(primsResult,cities);
 
+            //creating new graph for our cyclic mst
+            Graph mg = new Graph(v);
+
+            for(int i=1; i<mst.length; i++) {
+                mg.addEdge(mst[i].src, mst[i].dest);
+            }
+
+            //creating euler cycle from cyclic mst
+            mg.eulerianCycle();
 
             System.out.println("hey");
 

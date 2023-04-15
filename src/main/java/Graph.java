@@ -1,4 +1,6 @@
 import java.util.*;
+
+
 public class Graph {
     //V->count of vertices
     //E->count of edges
@@ -6,11 +8,99 @@ public class Graph {
     private final int E;
 
     private LinkedList<Integer>[] adjList;
+    ArrayList<Integer> eulerianCircuit = new ArrayList<Integer>();
 
     Graph(int v, int e) {
         this.V = v;
         this.E = e;
     }
+
+    //***Eulerian Cycle******
+
+    void eulerianCycle() {
+
+        Integer u = 0;
+        for (int i = 0; i < V; i++)
+        {
+            if (adjList[i].size() % 2 == 1)
+            {
+                u = i;
+                break;
+            }
+        }
+
+        eulerUtil(u);
+    }
+
+    void eulerUtil(Integer u) {
+
+        for (int i = 0; i < adjList[u].size(); i++)
+        {
+            Integer v = adjList[u].get(i);
+
+            if (isValidNextEdge(u, v))
+            {
+                System.out.print(u + "-" + v + " ");
+                eulerianCircuit.add(u);
+                eulerianCircuit.add(v);
+
+                removeEdge(u, v);
+                eulerUtil(v);
+            }
+        }
+    }
+
+
+    boolean isValidNextEdge(Integer u, Integer v) {
+
+        if (adjList[u].size() == 1) {
+            return true;
+        }
+
+        boolean[] isVisited = new boolean[this.V];
+        int count1 = dfsCount(u, isVisited);
+
+        removeEdge(u, v);
+        isVisited = new boolean[this.V];
+        int count2 = dfsCount(u, isVisited);
+
+        addEdge(u, v);
+        return (count1 > count2) ? false : true;
+    }
+
+    int dfsCount(Integer s, boolean[] isVisited) {
+        int count=0;
+        Stack<Integer> stack = new Stack<>();
+
+
+        stack.push(s);
+
+        while(stack.empty() == false)
+        {
+            s = stack.peek();
+            stack.pop();
+
+            if(isVisited[s] == false)
+            {
+                //System.out.print(s + " ");
+                isVisited[s]= true;
+                count++;
+            }
+
+            Iterator<Integer> itr = adjList[s].iterator();
+
+            while (itr.hasNext())
+            {
+                int v = itr.next();
+                if(!isVisited[v]) {
+                    stack.push(v);
+                }
+            }
+        }
+        return count;
+    }
+
+
 
     Graph(int numOfVertices) {
         // initialise vertex count
@@ -193,7 +283,7 @@ public class Graph {
             mst[i].src = path[i];
             mst[i].dest = i;
             mst[i].edgeWeight = distanceCostMatrix[i][path[i]];
-            System.out.println(mst[i].src+"->"+mst[i].dest+"{"+mst[i].edgeWeight +"}");
+            //System.out.println(mst[i].src+"->"+mst[i].dest+"{"+mst[i].edgeWeight +"}");
         }
         return mst;
     }
