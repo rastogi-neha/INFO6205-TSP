@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class SimulatedAnnealing {
 
-    private static ArrayList<City> simulatedAnnealing(ArrayList<City> tspTour, double temperature, double coolingRate, TravellerData td) {
+    public static ArrayList<City> simulatedAnnealing(ArrayList<City> tspTour, double temperature, double coolingRate) {
         ArrayList<City> currentSolution = new ArrayList<>(tspTour);
         ArrayList<City> bestSolution = new ArrayList<>(currentSolution);
 
@@ -20,8 +20,8 @@ public class SimulatedAnnealing {
             newSolution.set(cityIndex2, city1);
 
             // Calculate the cost (distance) of the new solution
-            double currentCost = calculateTotalDistance(currentSolution, td);
-            double newCost = calculateTotalDistance(newSolution, td);
+            double currentCost = calculateTotalDistanceAnnealing(currentSolution);
+            double newCost = calculateTotalDistanceAnnealing(newSolution);
 
             // Decide whether to accept the new solution based on the cost and temperature
             if (acceptanceProbability(currentCost, newCost, temperature) > Math.random()) {
@@ -29,18 +29,19 @@ public class SimulatedAnnealing {
             }
 
             // Update the best solution found so far
-            if (calculateTotalDistance(currentSolution, td) < calculateTotalDistance(bestSolution, td)) {
+            if (calculateTotalDistanceAnnealing(currentSolution) < calculateTotalDistanceAnnealing(bestSolution)) {
                 bestSolution = new ArrayList<>(currentSolution);
             }
 
             // Cool down the temperature
-            temperature *= coolingRate;
+            temperature *= (1-coolingRate);
         }
 
         return bestSolution;
     }
 
-    private static double calculateTotalDistance(ArrayList<City> tour, TravellerData td) {
+    public static double calculateTotalDistanceAnnealing(ArrayList<City> tour) {
+        TravellerData td=new TravellerData();
         double totalDistance = 0;
         for (int i = 0; i < tour.size() - 1; i++) {
             totalDistance += td.getDistance(tour.get(i), tour.get(i + 1));
@@ -49,7 +50,7 @@ public class SimulatedAnnealing {
         return totalDistance;
     }
 
-    private static double acceptanceProbability(double currentCost, double newCost, double temperature) {
+    public static double acceptanceProbability(double currentCost, double newCost, double temperature) {
         if (newCost < currentCost) {
             return 1.0;
         }
