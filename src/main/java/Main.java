@@ -54,6 +54,7 @@ public class Main {
             ArrayList<City> tspTour = postProcessing(resultCircuit,cities);
 
             //Optimizations
+
         }
 
     }
