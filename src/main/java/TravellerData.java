@@ -11,6 +11,10 @@ public class TravellerData{
         cities.add(city);
     }
 
+    public static City getCity(int i){
+        return cities.get(i);
+    }
+
     public static List<City> putCitiesInList(List<String[]> data){
 
         int c=0;

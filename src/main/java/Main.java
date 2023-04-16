@@ -28,29 +28,32 @@ public class Main {
                         distanceCostMatrix[i][i]=Integer.MAX_VALUE;
                 }
             }
-
+            //graph for Prim's
             Graph g = new Graph(v,e);
             Edge [] primsResult = g.getPrimMST(distanceCostMatrix,v) ;
-
+            //To find Odd Vertex and implement Perfect Edges
             Edge [] mst = g.findAndAddPerfectMatches(primsResult,cities);
 
-            //creating new graph for our cyclic mst
+            //Creating Multigraph for combining MST with perfect edges
             Graph mg = new Graph(v);
 
             for(int i=1; i<mst.length; i++) {
                 mg.addEdge(mst[i].src, mst[i].dest);
             }
 
-            //creating euler cycle from cyclic mst
+            //Euler Cycle from Multigraph
             mg.eulerianCycle();
-
+            //Remove repeated cities and get Hamiltonian Cycle
             ArrayList<Integer> resultCircuit = mg.clearRepeatedCities(mg.eulerianCircuit);
 
-            //calculating path distance
+            //Calculating Total distance
             int totalDistance = calculateTotalDistance(resultCircuit, distanceCostMatrix);
-            System.out.println(totalDistance);
+            System.out.println("Cost for Christofides Algorithm: "+totalDistance);
 
-            //algos to be implemented
+            //Post processing to convert result set of indexes to Cities
+            ArrayList<City> tspTour = postProcessing(resultCircuit,cities);
+
+            //Optimizations
         }
 
     }
@@ -64,5 +67,15 @@ public class Main {
             counter++;
         }
         return sum;
+    }
+
+    private static ArrayList<City> postProcessing(ArrayList<Integer> resultCircuit, List<City> cities) {
+        ArrayList<City> tspTour = new ArrayList<>();
+        TravellerData td=new TravellerData();
+        for(Integer i : resultCircuit){
+            tspTour.add(td.getCity(i));
+            //System.out.println(td.getCity(i));
+        }
+        return tspTour;
     }
 }
