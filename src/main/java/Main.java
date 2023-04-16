@@ -44,11 +44,25 @@ public class Main {
             //creating euler cycle from cyclic mst
             mg.eulerianCycle();
 
-            System.out.println("hey");
+            ArrayList<Integer> resultCircuit = mg.clearRepeatedCities(mg.eulerianCircuit);
+
+            //calculating path distance
+            int totalDistance = calculateTotalDistance(resultCircuit, distanceCostMatrix);
+            System.out.println(totalDistance);
 
             //algos to be implemented
-
         }
 
+    }
+
+    public static int calculateTotalDistance(ArrayList<Integer> resultCircuit, double distanceMatrix[][]) {
+        int sum = 0;
+        int counter = 0;
+
+        while(counter < resultCircuit.size()-1) {
+            sum += distanceMatrix[resultCircuit.get(counter)][resultCircuit.get(counter+1)];
+            counter++;
+        }
+        return sum;
     }
 }

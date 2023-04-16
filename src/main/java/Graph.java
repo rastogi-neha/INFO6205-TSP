@@ -40,7 +40,7 @@ public class Graph {
 
             if (isValidNextEdge(u, v))
             {
-                System.out.print(u + "-" + v + " ");
+                //System.out.print(u + "-" + v + " ");
                 eulerianCircuit.add(u);
                 eulerianCircuit.add(v);
 
@@ -216,6 +216,7 @@ public class Graph {
             }
 
         }
+        //System.out.println("Perfect Matched edges"+newEdgesForOddVertexs);
 
     }
 
@@ -278,14 +279,33 @@ public class Graph {
 
         // print the constructed MST
         Edge[] mst = new Edge[V];
+        double cc=0.0;
         for (int i = 1; i < V; i++) {
             mst[i]=new Edge();
             mst[i].src = path[i];
             mst[i].dest = i;
             mst[i].edgeWeight = distanceCostMatrix[i][path[i]];
             //System.out.println(mst[i].src+"->"+mst[i].dest+"{"+mst[i].edgeWeight +"}");
+            cc+=mst[i].edgeWeight;
         }
+        //System.out.println(cc);
         return mst;
     }
+
+    //******Hamiltonian Cycle*******
+    ArrayList<Integer> clearRepeatedCities(ArrayList<Integer> cities) {
+        // Find and remove duplicate cities
+        int[] citiesArray = new int[V];
+        ArrayList<Integer> resultCircuit = new ArrayList<Integer>();
+        for(int i=0; i<cities.size(); i++) {
+            citiesArray[cities.get(i)]++;
+            if(citiesArray[cities.get(i)] == 1) {
+                resultCircuit.add(cities.get(i));
+            }
+        }
+        resultCircuit.add(resultCircuit.get(0));
+        return resultCircuit;
+    }
+
 
 }

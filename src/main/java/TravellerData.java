@@ -1,3 +1,5 @@
+import org.apache.lucene.util.SloppyMath;
+
 import java.util.*;
 
 //This class generates a list of all cities to be traversed by the salesman
@@ -28,9 +30,12 @@ public class TravellerData{
     }
 
     public double getDistance(City toCity,City fromCity){
-        double xDistance = Math.abs (fromCity.getX()- toCity.getX());
-        double yDistance = Math.abs (fromCity.getY()- toCity.getY());
-        double distance = Math.sqrt(Math.pow(xDistance,2)+Math.pow(yDistance,2));
+      //Euclidean distance
+//        double xDistance = Math.abs (fromCity.getX()- toCity.getX());
+//        double yDistance = Math.abs (fromCity.getY()- toCity.getY());
+//        double distance = Math.sqrt(Math.pow(xDistance,2)+Math.pow(yDistance,2));
+        //Haversin distance
+        double distance= SloppyMath.haversinMeters(toCity.getY(),toCity.getX(),fromCity.getY(),fromCity.getX());
         return distance;
     }
 }
