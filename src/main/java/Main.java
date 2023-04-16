@@ -1,12 +1,11 @@
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class Main {
 
     public static void main(String[] args) {
         FileReading fr=new FileReading();
-        List<String[]> dataPoints = fr.readingDataPoints("./src/main/java/crimeSample.csv");
+        List<String[]> dataPoints = fr.readingDataPoints("./src/main/java/crimeSample1.csv");
 
         if(dataPoints.size()==0)
             System.out.println("Error");
@@ -48,24 +47,33 @@ public class Main {
             ArrayList<Integer> resultCircuit = mg.clearRepeatedCities(mg.eulerianCircuit);
 
             //Calculating Total distance
-            int totalDistance = calculateTotalDistance(resultCircuit, distanceCostMatrix);
+            double totalDistance = calculateTotalDistance(resultCircuit, distanceCostMatrix);
             System.out.println("Cost for Christofides Algorithm: "+totalDistance);
 
-            //Post processing to convert result set of indexes to Cities
+            //Post-processing to convert result set of indexes to Cities
             ArrayList<City> tspTour = postProcessing(resultCircuit,cities);
+            ArrayList<City> tspTourCopy = new ArrayList<>(tspTour.subList(0, tspTour.size()-1));
 
             // Optimizations
+            //2-Opt
+            TwoOpt twoOpt = new TwoOpt();
+            double twoOptDistance = twoOpt.twoOptimization(tspTourCopy,totalDistance);
+            System.out.println("Cost after 2 Optimization: " + twoOptDistance);
+
+            //Simulated Annealing
             ArrayList<City> optimizedTour = simulatedAnnealing(tspTour, 10000, 0.999, td);
-            double optimizedCost = calculateTotalDistance(optimizedTour, td);
+            double optimizedCost = calculateTotalDistanceAnnealing(optimizedTour, td);
             System.out.println("Optimized Tour: " + optimizedTour);
             System.out.println("Optimized Cost: " + optimizedCost);
+
+
 
         }
 
     }
 
-    public static int calculateTotalDistance(ArrayList<Integer> resultCircuit, double distanceMatrix[][]) {
-        int sum = 0;
+    public static double calculateTotalDistance(ArrayList<Integer> resultCircuit, double distanceMatrix[][]) {
+        double sum = 0;
         int counter = 0;
 
         while(counter < resultCircuit.size()-1) {
@@ -102,8 +110,8 @@ public class Main {
             newSolution.set(cityIndex2, city1);
 
             // Calculate the cost (distance) of the new solution
-            double currentCost = calculateTotalDistance(currentSolution, td);
-            double newCost = calculateTotalDistance(newSolution, td);
+            double currentCost = calculateTotalDistanceAnnealing(currentSolution, td);
+            double newCost = calculateTotalDistanceAnnealing(newSolution, td);
 
             // Decide whether to accept the new solution based on the cost and temperature
             if (acceptanceProbability(currentCost, newCost, temperature) > Math.random()) {
@@ -111,7 +119,7 @@ public class Main {
             }
 
             // Update the best solution found so far
-            if (calculateTotalDistance(currentSolution, td) < calculateTotalDistance(bestSolution, td)) {
+            if (calculateTotalDistanceAnnealing(currentSolution, td) < calculateTotalDistanceAnnealing(bestSolution, td)) {
                 bestSolution = new ArrayList<>(currentSolution);
             }
 
@@ -122,7 +130,7 @@ public class Main {
         return bestSolution;
     }
 
-    private static double calculateTotalDistance(ArrayList<City> tour, TravellerData td) {
+    private static double calculateTotalDistanceAnnealing(ArrayList<City> tour, TravellerData td) {
         double totalDistance = 0;
         for (int i = 0; i < tour.size() - 1; i++) {
             totalDistance += td.getDistance(tour.get(i), tour.get(i + 1));
