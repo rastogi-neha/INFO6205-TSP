@@ -2,7 +2,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
-
     public static void main(String[] args) {
         FileReading fr=new FileReading();
         List<String[]> dataPoints = fr.readingDataPoints("./src/main/java/crimeSample1.csv");
@@ -61,19 +60,20 @@ public class Main {
             double twoOptDistance = twoOpt.twoOptimization(tspTourCopy,totalDistance);
             System.out.println("Cost after 2 Optimization: " + twoOptDistance);
 
+            //3-Opt
+            ThreeOpt threeOpt = new ThreeOpt();
+            double threeOptDistance = threeOpt.threeOptimization(tspTourCopy);
+            System.out.println("Cost after 3 Optimization: " + threeOptDistance);
+
             //Simulated Annealing
-            SimulatedAnnealing simulatedAnnealingObj = new SimulatedAnnealing();
-            ArrayList<City> optimizedTour = simulatedAnnealingObj.simulatedAnnealing(tspTourCopy2, 500000000, 0.000000003);
-            double optimizedCost = simulatedAnnealingObj.calculateTotalDistanceAnnealing(optimizedTour);
+            //SimulatedAnnealing simulatedAnnealingObj = new SimulatedAnnealing();
+            //ArrayList<City> optimizedTour = simulatedAnnealingObj.simulatedAnnealing(tspTourCopy2, 500000000, 0.000000003);
+            //double optimizedCost = simulatedAnnealingObj.calculateTotalDistanceAnnealing(optimizedTour);
             //System.out.println("Optimized Tour: " + optimizedTour);
-            System.out.println("Optimized Cost: " + optimizedCost);
-
-
+            //System.out.println("Optimized Cost: " + optimizedCost);
 
         }
-
     }
-
     public static double calculateTotalDistance(ArrayList<Integer> resultCircuit, double distanceMatrix[][]) {
         double sum = 0;
         int counter = 0;
@@ -94,5 +94,4 @@ public class Main {
         }
         return tspTour;
     }
-
 }

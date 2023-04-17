@@ -30,7 +30,7 @@ public class ThreeOpt {
         return 0;
     }
 
-    public static ArrayList<City> threeOpt(ArrayList<City> tspTour) {
+    public static double threeOptimization(ArrayList<City> tspTour) {
         // Iterative improvement based on 3 exchange.
         while (true) {
             double delta = 0;
@@ -41,7 +41,8 @@ public class ThreeOpt {
                 break;
             }
         }
-        return tspTour;
+
+        return calculateThreeOptDistance(tspTour);
     }
 
     public static ArrayList<int[]> allSegments(int n) {
@@ -55,6 +56,16 @@ public class ThreeOpt {
             }
         }
         return segments;
+    }
+
+    public static double calculateThreeOptDistance(ArrayList<City> tspTour){
+        TravellerData td=new TravellerData();
+        double totalDistance = 0;
+        for (int i = 0; i < tspTour.size() - 1; i++) {
+            totalDistance += td.getDistance(tspTour.get(i), tspTour.get(i + 1));
+        }
+        totalDistance += td.getDistance(tspTour.get(tspTour.size() - 1), tspTour.get(0));
+        return totalDistance;
     }
 
 }
