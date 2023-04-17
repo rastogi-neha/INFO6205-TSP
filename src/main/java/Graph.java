@@ -149,6 +149,7 @@ public class Graph {
                 oddDegreeVertex.add(cities.get(i));
             }
         }
+        System.out.println("Number of Vertices with Odd Degree: " + oddDegreeVertex.size());
         findMatchesWithNearestNeighbour(oddDegreeVertex,newEdgesForOddVertexs);
 
         //merging new edges into mst so all nodes have even number edge now
@@ -216,12 +217,8 @@ public class Graph {
             }
 
         }
-        //System.out.println("Perfect Matched edges"+newEdgesForOddVertexs);
-
+        System.out.println("Perfect Matched edges: " + newEdgesForOddVertexs.size());
     }
-
-
-
 
     int minKey(double [] cost, boolean visited[]) {
 
@@ -288,7 +285,7 @@ public class Graph {
             //System.out.println(mst[i].src+"->"+mst[i].dest+"{"+mst[i].edgeWeight +"}");
             cc+=mst[i].edgeWeight;
         }
-        //System.out.println(cc);
+        System.out.println("Weight of Prim's MST: " + cc);
         return mst;
     }
 

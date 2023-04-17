@@ -1,10 +1,11 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
         FileReading fr=new FileReading();
-        List<String[]> dataPoints = fr.readingDataPoints("./src/main/java/crimeSample1.csv");
+        List<String[]> dataPoints = fr.readingDataPoints("./src/main/java/crimeSample.csv");
 
         if(dataPoints.size()==0)
             System.out.println("Error");
@@ -14,6 +15,7 @@ public class Main {
 
             List<City> cities = td.putCitiesInList(dataPoints);
             int v=td.getNumberOfCities();
+            System.out.println("The number of cities to be visited are:" +v);
             int e=0;
 
             //distanceMatrix computed
@@ -53,6 +55,7 @@ public class Main {
             ArrayList<City> tspTour = postProcessing(resultCircuit,cities);
             ArrayList<City> tspTourCopy = new ArrayList<>(postProcessing(resultCircuit,cities).subList(0, tspTour.size()-1));
             ArrayList<City> tspTourCopy2 = new ArrayList<>(postProcessing(resultCircuit,cities).subList(0, tspTour.size()-1));
+            ArrayList<City> tspTourCopy3 = new ArrayList<>(postProcessing(resultCircuit,cities).subList(0, tspTour.size()-1));
 
             // Optimizations
             //2-Opt
@@ -62,15 +65,15 @@ public class Main {
 
             //3-Opt
             ThreeOpt threeOpt = new ThreeOpt();
-            double threeOptDistance = threeOpt.threeOptimization(tspTourCopy);
+            double threeOptDistance = threeOpt.threeOptimization(tspTourCopy2);
             System.out.println("Cost after 3 Optimization: " + threeOptDistance);
 
             //Simulated Annealing
-            //SimulatedAnnealing simulatedAnnealingObj = new SimulatedAnnealing();
-            //ArrayList<City> optimizedTour = simulatedAnnealingObj.simulatedAnnealing(tspTourCopy2, 500000000, 0.000000003);
-            //double optimizedCost = simulatedAnnealingObj.calculateTotalDistanceAnnealing(optimizedTour);
-            //System.out.println("Optimized Tour: " + optimizedTour);
-            //System.out.println("Optimized Cost: " + optimizedCost);
+            SimulatedAnnealing simulatedAnnealingObj = new SimulatedAnnealing();
+            ArrayList<City> optimizedTour = simulatedAnnealingObj.simulatedAnnealing(tspTourCopy3, 1000, 0.000001);
+            double optimizedCost = simulatedAnnealingObj.calculateTotalDistanceAnnealing(optimizedTour);
+            System.out.println("Optimized Tour: " + optimizedTour);
+            System.out.println("Cost after Simulated Annealing: " + optimizedCost);
 
         }
     }
