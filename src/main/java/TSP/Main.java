@@ -84,7 +84,7 @@ public class Main {
             showTour(tspTourCopy3);
 
             //Ant Colony Optimization
-            TSP.AntColony aco = new TSP.AntColony(tspTourCopy4,300,0.20,11,0.4,1,1.0,150,1,distanceCostMatrix);
+            TSP.AntColony aco = new TSP.AntColony(tspTourCopy4,400,1.0,2.0,0.4,100.0,1.0,1000,1,distanceCostMatrix);
             aco.run();
             showTour(tspTourCopy4);
         }
