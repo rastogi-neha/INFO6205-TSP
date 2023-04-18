@@ -84,7 +84,7 @@ public class Main {
             showTour(tspTourCopy3);
 
             //Ant Colony Optimization
-            TSP.AntColony aco = new TSP.AntColony(tspTourCopy4,100,0.25,10,0.4,1,0.99,150,1,distanceCostMatrix);
+            TSP.AntColony aco = new TSP.AntColony(tspTourCopy4,300,0.20,11,0.4,1,1.0,150,1,distanceCostMatrix);
             aco.run();
             showTour(tspTourCopy4);
         }
@@ -110,9 +110,12 @@ public class Main {
 
     private static void showTour(ArrayList<City> tspTour){
         for(City c:tspTour){
-            System.out.print(c.getCityName().substring(c.getCityName().length()-5) + " -> ");
+            if(c.equals(tspTour.get(tspTour.size()-1)))
+                System.out.println(c.getCityName().substring(c.getCityName().length()-5));
+            else
+                System.out.print(c.getCityName().substring(c.getCityName().length()-5) + " -> ");
         }
-        System.out.println();
     }
+
 
 }
