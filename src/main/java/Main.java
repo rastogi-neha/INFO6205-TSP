@@ -5,7 +5,7 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) {
         FileReading fr=new FileReading();
-        List<String[]> dataPoints = fr.readingDataPoints("./src/main/java/crimeSample.csv");
+        List<String[]> dataPoints = fr.readingDataPoints("./src/main/java/crimeSample1.csv");
 
         if(dataPoints.size()==0)
             System.out.println("Error");
@@ -70,10 +70,14 @@ public class Main {
 
             //Simulated Annealing
             SimulatedAnnealing simulatedAnnealingObj = new SimulatedAnnealing();
-            ArrayList<City> optimizedTour = simulatedAnnealingObj.simulatedAnnealing(tspTourCopy3, 1000, 0.000001);
+            ArrayList<City> optimizedTour = simulatedAnnealingObj.simulatedAnnealing(tspTourCopy3, 1000, 0.00001);
             double optimizedCost = simulatedAnnealingObj.calculateTotalDistanceAnnealing(optimizedTour);
             System.out.println("Optimized Tour: " + optimizedTour);
             System.out.println("Cost after Simulated Annealing: " + optimizedCost);
+
+            //Ant Colony Optimization
+            AntColony aco = new AntColony(tspTourCopy,100,1,5,0.5,1,1.0,100,1,distanceCostMatrix);
+            aco.run();
 
         }
     }

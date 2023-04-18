@@ -9,19 +9,21 @@ public class SimulatedAnnealing {
         ArrayList<City> bestSolution = new ArrayList<>(currentSolution);
 
         while (temperature > 1) {
-            ArrayList<City> newSolution = new ArrayList<>(currentSolution);
-
+            TwoOpt twoOpt=new TwoOpt();
+            double d= calculateTotalDistanceAnnealing(currentSolution);
+            double newCost = twoOpt.twoOptimization(currentSolution,d);
+            ArrayList<City> newSolution =currentSolution;
             // Generate a new solution by swapping two cities randomly
-            int cityIndex1 = (int) (newSolution.size() * Math.random());
-            int cityIndex2 = (int) (newSolution.size() * Math.random());
-            City city1 = newSolution.get(cityIndex1);
-            City city2 = newSolution.get(cityIndex2);
-            newSolution.set(cityIndex1, city2);
-            newSolution.set(cityIndex2, city1);
+//            int cityIndex1 = (int) (newSolution.size() * Math.random());
+//            int cityIndex2 = (int) (newSolution.size() * Math.random());
+//            City city1 = newSolution.get(cityIndex1);
+//            City city2 = newSolution.get(cityIndex2);
+//            newSolution.set(cityIndex1, city2);
+//            newSolution.set(cityIndex2, city1);
 
             // Calculate the cost (distance) of the new solution
             double currentCost = calculateTotalDistanceAnnealing(currentSolution);
-            double newCost = calculateTotalDistanceAnnealing(newSolution);
+            //double newCost = calculateTotalDistanceAnnealing(newSolution);
 
             // Decide whether to accept the new solution based on the cost and temperature
             if (acceptanceProbability(currentCost, newCost, temperature) > Math.random()) {
