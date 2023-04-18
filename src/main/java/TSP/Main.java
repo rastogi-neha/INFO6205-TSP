@@ -60,35 +60,38 @@ public class Main {
             ArrayList<City> tspTourCopy4 = new ArrayList<>(postProcessing(resultCircuit,cities).subList(0, tspTour.size()-1));
 
 
+            //Christofides path
+            showTour(tspTour);
+
             // Optimizations
             //2-Opt
             TwoOpt twoOpt = new TwoOpt();
             double twoOptDistance = twoOpt.twoOptimization(tspTourCopy,totalDistance);
             System.out.println("Cost after 2 Optimization: " + twoOptDistance);
+            showTour(tspTourCopy);
 
             //3-Opt
             ThreeOpt threeOpt = new ThreeOpt();
             double threeOptDistance = threeOpt.threeOptimization(tspTourCopy2);
             System.out.println("Cost after 3 Optimization: " + threeOptDistance);
+            showTour(tspTourCopy2);
 
             //Simulated Annealing
             SimulatedAnnealing simulatedAnnealingObj = new SimulatedAnnealing();
-            ArrayList<City> optimizedTour = simulatedAnnealingObj.simulatedAnnealing(tspTourCopy3, 1000, 0.00001);
+            ArrayList<City> optimizedTour = simulatedAnnealingObj.simulatedAnnealing(tspTourCopy3, 1000, 0.01);
             double optimizedCost = simulatedAnnealingObj.calculateTotalDistanceAnnealing(optimizedTour);
-            System.out.println("Optimized Tour: " + optimizedTour);
             System.out.println("Cost after Simulated Annealing: " + optimizedCost);
+            showTour(tspTourCopy3);
 
             //Ant Colony Optimization
-            TSP.AntColony aco = new TSP.AntColony(tspTourCopy4,100,1,5,0.5,1,1.0,100,1,distanceCostMatrix);
+            TSP.AntColony aco = new TSP.AntColony(tspTourCopy4,100,0.25,10,0.4,1,0.99,150,1,distanceCostMatrix);
             aco.run();
-
-
+            showTour(tspTourCopy4);
         }
     }
-    public static double calculateTotalDistance(ArrayList<Integer> resultCircuit, double distanceMatrix[][]) {
+    public static double calculateTotalDistance(ArrayList<Integer> resultCircuit, double [][]distanceMatrix) {
         double sum = 0;
         int counter = 0;
-
         while(counter < resultCircuit.size()-1) {
             sum += distanceMatrix[resultCircuit.get(counter)][resultCircuit.get(counter+1)];
             counter++;
@@ -101,8 +104,15 @@ public class Main {
         TravellerData td=new TravellerData();
         for(Integer i : resultCircuit){
             tspTour.add(td.getCity(i));
-            //System.out.println(td.getCity(i));
         }
         return tspTour;
     }
+
+    private static void showTour(ArrayList<City> tspTour){
+        for(City c:tspTour){
+            System.out.print(c.getCityName().substring(c.getCityName().length()-5) + " -> ");
+        }
+        System.out.println();
+    }
+
 }
