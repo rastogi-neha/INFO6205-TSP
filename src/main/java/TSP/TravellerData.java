@@ -31,11 +31,11 @@ public class TravellerData{
         return cities;
    }
 
-    public int getNumberOfCities(){
+    public static int getNumberOfCities(){
         return cities.size();
     }
 
-    public double getDistance(City toCity,City fromCity){
+    public static double getDistance(City toCity, City fromCity){
       //Euclidean distance
 //        double xDistance = Math.abs (fromCity.getX()- toCity.getX());
 //        double yDistance = Math.abs (fromCity.getY()- toCity.getY());

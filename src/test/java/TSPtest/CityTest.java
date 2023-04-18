@@ -1,8 +1,9 @@
 package TSPtest;
 
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
 import TSP.City;
+import org.junit.jupiter.api.Test;
+
 public class CityTest {
 
     @Test
@@ -20,15 +21,18 @@ public class CityTest {
         City city = new City("431c35c09f060084de8b562ad8ca5240808b4364641d8a997c2f5069e10e549d", -0.259035,51.566954, 31);
         Assertions.assertEquals(51.566954, city.getY(), 0.0001);
     }
+
     @Test
     public void testIndex() {
         City city = new City("868f7dab4cf763f84c4fd108ded5d8d88f88bcc9e31964a21b43d9a4e8475cfc", 0.072534,51.558445, 68);
         Assertions.assertEquals(68, city.getIndex());
     }
+
     @Test
     public void testToString() {
         City city = new City("dbffa8d35a80dc6e57be4a06d815498980c5ed3f3306824ffbfe7dfa222f937f", 0.015471,51.399233, 42);
         String expected = "TSP.City{cityName='dbffa8d35a80dc6e57be4a06d815498980c5ed3f3306824ffbfe7dfa222f937f', x=0.015471, y=51.399233, index=42}";
         Assertions.assertEquals(expected, city.toString());
     }
+
 }
