@@ -56,7 +56,7 @@ public class AntColony {
             updatePheromoneEvaporation();
         }
         System.out.println("Best tour length: " + bestTourLength);
-        System.out.println("Best tour: " + bestTour);
+        //System.out.println("Best tour: " + bestTour);
     }
 
     private ArrayList<Integer> constructTour() {

@@ -7,8 +7,8 @@ public class SimulatedAnnealing {
     public static ArrayList<City> simulatedAnnealing(ArrayList<City> tspTour, double temperature, double coolingRate) {
         ArrayList<City> currentSolution = new ArrayList<>(tspTour);
         ArrayList<City> bestSolution = new ArrayList<>(currentSolution);
-
-        while (temperature > 1) {
+        int c=0,counter=500000;
+        while (temperature > 1 && c<=counter) {
             TwoOpt twoOpt=new TwoOpt();
             double d= calculateTotalDistanceAnnealing(currentSolution);
             double newCost = twoOpt.twoOptimization(currentSolution,d);
@@ -37,6 +37,7 @@ public class SimulatedAnnealing {
 
             // Cool down the temperature
             temperature *= (1-coolingRate);
+            c++;
         }
 
         return bestSolution;
