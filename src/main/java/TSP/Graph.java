@@ -10,16 +10,16 @@ public class Graph {
     private final int E;
 
     private LinkedList<Integer>[] adjList;
-    ArrayList<Integer> eulerianCircuit = new ArrayList<Integer>();
+    public ArrayList<Integer> eulerianCircuit = new ArrayList<Integer>();
 
-    Graph(int v, int e) {
+    public Graph(int v, int e) {
         this.V = v;
         this.E = e;
     }
 
     //***Eulerian Cycle******
 
-    void eulerianCycle() {
+    public void eulerianCycle() {
 
         Integer u = 0;
         for (int i = 0; i < V; i++)
@@ -53,7 +53,7 @@ public class Graph {
     }
 
 
-    boolean isValidNextEdge(Integer u, Integer v) {
+    public boolean isValidNextEdge(Integer u, Integer v) {
 
         if (adjList[u].size() == 1) {
             return true;
@@ -70,7 +70,7 @@ public class Graph {
         return (count1 > count2) ? false : true;
     }
 
-    int dfsCount(Integer s, boolean[] isVisited) {
+    public int dfsCount(Integer s, boolean[] isVisited) {
         int count=0;
         Stack<Integer> stack = new Stack<>();
 
@@ -104,7 +104,7 @@ public class Graph {
 
 
 
-    Graph(int numOfVertices) {
+    public Graph(int numOfVertices) {
         // initialise vertex count
         this.V = numOfVertices;
         // initialise adjacency list
@@ -124,7 +124,7 @@ public class Graph {
 //        }
 //    }
 
-    void addEdge(Integer u, Integer v) {
+    public void addEdge(Integer u, Integer v) {
         adjList[u].add(v);
         adjList[v].add(u);
     }
@@ -133,7 +133,7 @@ public class Graph {
         adjList[v].remove(u);
     }
 
-    Edge[] findAndAddPerfectMatches(Edge[] mst,List<City> cities){
+    public Edge[] findAndAddPerfectMatches(Edge[] mst, List<City> cities){
         int[] neighbouringVerticesOnMST = new int[V];
 
         for(int i = 1 ; i < mst.length ; i++) {
@@ -235,7 +235,7 @@ public class Graph {
         }
         return min_index;
     }
-    Edge[] getPrimMST(double distanceCostMatrix[][],int V){
+    public Edge[] getPrimMST(double distanceCostMatrix[][], int V){
         //Tour chosen for MST
         int [] path = new int[V];
 
