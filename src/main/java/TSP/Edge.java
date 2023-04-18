@@ -1,3 +1,5 @@
+package TSP;
+
 public class Edge implements Comparable<Edge> {
     int src, dest;
     double edgeWeight;

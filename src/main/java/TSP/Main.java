@@ -1,5 +1,6 @@
+package TSP;
+
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class Main {
@@ -53,37 +54,34 @@ public class Main {
 
             //Post-processing to convert result set of indexes to Cities
             ArrayList<City> tspTour = postProcessing(resultCircuit,cities);
-            showTour(tspTour);
             ArrayList<City> tspTourCopy = new ArrayList<>(postProcessing(resultCircuit,cities).subList(0, tspTour.size()-1));
             ArrayList<City> tspTourCopy2 = new ArrayList<>(postProcessing(resultCircuit,cities).subList(0, tspTour.size()-1));
             ArrayList<City> tspTourCopy3 = new ArrayList<>(postProcessing(resultCircuit,cities).subList(0, tspTour.size()-1));
             ArrayList<City> tspTourCopy4 = new ArrayList<>(postProcessing(resultCircuit,cities).subList(0, tspTour.size()-1));
 
+
             // Optimizations
             //2-Opt
-//            TwoOpt twoOpt = new TwoOpt();
-//            double twoOptDistance = twoOpt.twoOptimization(tspTourCopy,totalDistance);
-//            System.out.println("Cost after 2 Optimization: " + twoOptDistance);
-//            showTour(tspTourCopy);
+            TwoOpt twoOpt = new TwoOpt();
+            double twoOptDistance = twoOpt.twoOptimization(tspTourCopy,totalDistance);
+            System.out.println("Cost after 2 Optimization: " + twoOptDistance);
 
             //3-Opt
-//            ThreeOpt threeOpt = new ThreeOpt();
-//            double threeOptDistance = threeOpt.threeOptimization(tspTourCopy2);
-//            System.out.println("Cost after 3 Optimization: " + threeOptDistance);
-//            showTour(tspTourCopy2);
+            ThreeOpt threeOpt = new ThreeOpt();
+            double threeOptDistance = threeOpt.threeOptimization(tspTourCopy2);
+            System.out.println("Cost after 3 Optimization: " + threeOptDistance);
 
             //Simulated Annealing
-//            SimulatedAnnealing simulatedAnnealingObj = new SimulatedAnnealing();
-//            ArrayList<City> optimizedTour = simulatedAnnealingObj.simulatedAnnealing(tspTourCopy3, 500, 0.01);
-//            double optimizedCost = simulatedAnnealingObj.calculateTotalDistanceAnnealing(optimizedTour);
-//            //System.out.println("Optimized Tour: " + optimizedTour);
-//            System.out.println("Cost after Simulated Annealing: " + optimizedCost);
-//            showTour(tspTourCopy3);
+            SimulatedAnnealing simulatedAnnealingObj = new SimulatedAnnealing();
+            ArrayList<City> optimizedTour = simulatedAnnealingObj.simulatedAnnealing(tspTourCopy3, 1000, 0.00001);
+            double optimizedCost = simulatedAnnealingObj.calculateTotalDistanceAnnealing(optimizedTour);
+            System.out.println("Optimized Tour: " + optimizedTour);
+            System.out.println("Cost after Simulated Annealing: " + optimizedCost);
 
             //Ant Colony Optimization
-            AntColony aco = new AntColony(tspTourCopy4,100,5,5,0.5,1,1.0,100,1,distanceCostMatrix);
+            TSP.AntColony aco = new TSP.AntColony(tspTourCopy4,100,1,5,0.5,1,1.0,100,1,distanceCostMatrix);
             aco.run();
-            showTour(tspTourCopy4);
+
 
         }
     }
@@ -106,11 +104,5 @@ public class Main {
             //System.out.println(td.getCity(i));
         }
         return tspTour;
-    }
-    private static void showTour(ArrayList<City> tspTour){
-        for(City c:tspTour){
-            System.out.print(c.getCityName().substring(c.getCityName().length()-5) + " -> ");
-        }
-        System.out.println();
     }
 }

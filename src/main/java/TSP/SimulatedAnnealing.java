@@ -1,4 +1,4 @@
-
+package TSP;
 
 import java.util.ArrayList;
 
@@ -7,8 +7,8 @@ public class SimulatedAnnealing {
     public static ArrayList<City> simulatedAnnealing(ArrayList<City> tspTour, double temperature, double coolingRate) {
         ArrayList<City> currentSolution = new ArrayList<>(tspTour);
         ArrayList<City> bestSolution = new ArrayList<>(currentSolution);
-        int c=0,counter=500000;
-        while (temperature > 1 && c<=counter) {
+
+        while (temperature > 1 ) {
             TwoOpt twoOpt=new TwoOpt();
             double d= calculateTotalDistanceAnnealing(currentSolution);
             double newCost = twoOpt.twoOptimization(currentSolution,d);
@@ -16,8 +16,8 @@ public class SimulatedAnnealing {
             // Generate a new solution by swapping two cities randomly
 //            int cityIndex1 = (int) (newSolution.size() * Math.random());
 //            int cityIndex2 = (int) (newSolution.size() * Math.random());
-//            City city1 = newSolution.get(cityIndex1);
-//            City city2 = newSolution.get(cityIndex2);
+//            TSP.City city1 = newSolution.get(cityIndex1);
+//            TSP.City city2 = newSolution.get(cityIndex2);
 //            newSolution.set(cityIndex1, city2);
 //            newSolution.set(cityIndex2, city1);
 
@@ -37,7 +37,6 @@ public class SimulatedAnnealing {
 
             // Cool down the temperature
             temperature *= (1-coolingRate);
-            c++;
         }
 
         return bestSolution;

@@ -1,3 +1,4 @@
+package TSP;
 
 public class City{
 
@@ -47,7 +48,7 @@ public class City{
 
     @Override
     public String toString() {
-        return "City{" +
+        return "TSP.City{" +
                 "cityName='" + cityName + '\'' +
                 ", x=" + x +
                 ", y=" + y +

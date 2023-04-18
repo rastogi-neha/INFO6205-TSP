@@ -1,3 +1,5 @@
+package TSP;
+
 import org.apache.lucene.util.SloppyMath;
 
 import java.util.*;
@@ -23,7 +25,7 @@ public class TravellerData{
             cities.add(city);
             c++;
         }
-//        for(City c:cities){
+//        for(TSP.City c:cities){
 //            System.out.println(c.toString());
 //        }
         return cities;
@@ -39,7 +41,6 @@ public class TravellerData{
 //        double yDistance = Math.abs (fromCity.getY()- toCity.getY());
 //        double distance = Math.sqrt(Math.pow(xDistance,2)+Math.pow(yDistance,2));
         //Haversin distance
-        double distance= SloppyMath.haversinMeters(toCity.getY(),toCity.getX(),fromCity.getY(),fromCity.getX());
-        return distance;
+        return SloppyMath.haversinMeters(toCity.getY(),toCity.getX(),fromCity.getY(),fromCity.getX());
     }
 }

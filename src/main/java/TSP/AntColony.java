@@ -1,3 +1,5 @@
+package TSP;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -20,7 +22,7 @@ public class AntColony {
     private ArrayList<Integer> bestTour;
 
     public AntColony(List<City> cities, int numberOfAnts, double alpha, double beta,
-                                 double evaporationRate, double Q, double initialPheromone, int maxIterations, long seed, double[][] distanceCostMatrix) {
+                     double evaporationRate, double Q, double initialPheromone, int maxIterations, long seed, double[][] distanceCostMatrix) {
         this.cities = cities;
         this.numberOfCities = cities.size();
         this.distanceMatrix = distanceCostMatrix;
