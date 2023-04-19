@@ -11,6 +11,7 @@ public class SimulatedAnnealing {
         while (temperature > 1 ) {
             TwoOpt twoOpt=new TwoOpt();
             double d= calculateTotalDistanceAnnealing(currentSolution);
+            //Using 2 Opt for swapping
             double newCost = twoOpt.twoOptimization(currentSolution,d);
             ArrayList<City> newSolution =currentSolution;
             // Generate a new solution by swapping two cities randomly

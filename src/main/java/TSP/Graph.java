@@ -292,7 +292,7 @@ public class Graph {
     }
 
     //******Hamiltonian Cycle*******
-    ArrayList<Integer> clearRepeatedCities(ArrayList<Integer> cities) {
+    public ArrayList<Integer> clearRepeatedCities(ArrayList<Integer> cities) {
         // Find and remove duplicate cities
         int[] citiesArray = new int[V];
         ArrayList<Integer> resultCircuit = new ArrayList<Integer>();
