@@ -6,6 +6,71 @@ import java.util.Random;
 
 public class AntColony {
     private final List<City> cities;
+
+    public List<City> getCities() {
+        return cities;
+    }
+
+    public int getNumberOfCities() {
+        return numberOfCities;
+    }
+
+    public double[][] getDistanceMatrix() {
+        return distanceMatrix;
+    }
+
+    public double[][] getPheromoneMatrix() {
+        return pheromoneMatrix;
+    }
+
+    public Random getRandom() {
+        return random;
+    }
+
+    public int getNumberOfAnts() {
+        return numberOfAnts;
+    }
+
+    public double getAlpha() {
+        return alpha;
+    }
+
+    public double getBeta() {
+        return beta;
+    }
+
+    public double getEvaporationRate() {
+        return evaporationRate;
+    }
+
+    public double getQ() {
+        return Q;
+    }
+
+    public int getMaxIterations() {
+        return maxIterations;
+    }
+
+    public double getInitialPheromone() {
+        return initialPheromone;
+    }
+
+    public double getBestTourLength() {
+        return bestTourLength;
+    }
+
+    public void setBestTourLength(double bestTourLength) {
+        this.bestTourLength = bestTourLength;
+    }
+
+    public ArrayList<Integer> getBestTour() {
+        return bestTour;
+    }
+
+    public void setBestTour(ArrayList<Integer> bestTour) {
+        this.bestTour = bestTour;
+    }
+
     private final int numberOfCities;
     private final double[][] distanceMatrix;
     private final double[][] pheromoneMatrix;
@@ -77,7 +142,7 @@ public class AntColony {
         return tour;
     }
 
-    private double[] calculateProbabilities(int currentCityIndex, boolean[] visited) {
+    public double[] calculateProbabilities(int currentCityIndex, boolean[] visited) {
         double[] probabilities = new double[numberOfCities];
         double probabilitiesSum = 0;
         for (int i = 0; i < numberOfCities; i++) {
@@ -96,7 +161,7 @@ public class AntColony {
     }
 
 
-    private int selectNextCity(double[] probabilities) {
+    public int selectNextCity(double[] probabilities) {
         double randomValue = random.nextDouble();
         double probabilitiesSum = 0;
         for (int i = 0; i < numberOfCities; i++) {
@@ -110,7 +175,7 @@ public class AntColony {
     }
 
 
-    private void updatePheromoneEvaporation() {
+    public void updatePheromoneEvaporation() {
         for (int i = 0; i < numberOfCities; i++) {
             for (int j = 0; j < numberOfCities; j++) {
                 pheromoneMatrix[i][j] = pheromoneMatrix[i][j] * (1 - evaporationRate);
@@ -118,7 +183,7 @@ public class AntColony {
         }
     }
 
-    private double[][] initializePheromoneMatrix(double initialPheromone, int numberOfCities) {
+    public double[][] initializePheromoneMatrix(double initialPheromone, int numberOfCities) {
         double[][] pheromoneMatrix = new double[numberOfCities][numberOfCities];
         for (int i = 0; i < numberOfCities; i++) {
             for (int j = i + 1; j < numberOfCities; j++) {
@@ -129,7 +194,7 @@ public class AntColony {
         return pheromoneMatrix;
     }
 
-    private double calculateTourLength(ArrayList<Integer> tour) {
+    public double calculateTourLength(ArrayList<Integer> tour) {
         double tourLength = 0;
         for (int i = 0; i < tour.size() - 1; i++) {
             int cityIndex1 = tour.get(i);
@@ -141,7 +206,7 @@ public class AntColony {
         tourLength += distanceMatrix[lastCityIndex][firstCityIndex];
         return tourLength;
     }
-    private void updatePheromone(ArrayList<Integer> tour, double tourLength) {
+    public void updatePheromone(ArrayList<Integer> tour, double tourLength) {
         double pheromoneToAdd = Q / tourLength;
         for (int i = 0; i < numberOfCities - 1; i++) {
             int city1 = tour.get(i);
@@ -154,6 +219,7 @@ public class AntColony {
         pheromoneMatrix[lastCity][firstCity] = (1 - evaporationRate) * pheromoneMatrix[lastCity][firstCity] + evaporationRate * pheromoneToAdd;
         pheromoneMatrix[firstCity][lastCity] = (1 - evaporationRate) * pheromoneMatrix[firstCity][lastCity] + evaporationRate * pheromoneToAdd;
     }
+
 
 }
 

@@ -5,12 +5,12 @@ import java.util.Collections;
 
 public class TwoOpt {
 
-    void do2Opt(ArrayList<City> tspTour, int i, int j) {
+    public void do2Opt(ArrayList<City> tspTour, int i, int j) {
         //reverse(begin(tspTour) + i + 1, begin(tspTour) + j + 1);
         Collections.reverse(tspTour.subList(i+1,j+1));
     }
 
-    double twoOptimization(ArrayList<City> tspTour,double currentDistance){
+    public double twoOptimization(ArrayList<City> tspTour, double currentDistance){
         TravellerData td=new TravellerData();
         int n=tspTour.size();
         boolean foundImprovement = true;
