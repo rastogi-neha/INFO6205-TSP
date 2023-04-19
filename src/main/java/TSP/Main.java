@@ -99,7 +99,7 @@ public class Main {
         return sum;
     }
 
-    private static ArrayList<City> postProcessing(ArrayList<Integer> resultCircuit, List<City> cities) {
+    public static ArrayList<City> postProcessing(ArrayList<Integer> resultCircuit, List<City> cities) {
         ArrayList<City> tspTour = new ArrayList<>();
         TravellerData td=new TravellerData();
         for(Integer i : resultCircuit){
