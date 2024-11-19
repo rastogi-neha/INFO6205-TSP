@@ -59,7 +59,8 @@ public class Main {
             ArrayList<City> tspTourCopy3 = new ArrayList<>(postProcessing(resultCircuit,cities).subList(0, tspTour.size()-1));
             ArrayList<City> tspTourCopy4 = new ArrayList<>(postProcessing(resultCircuit,cities).subList(0, tspTour.size()-1));
 
-
+            double minCost=totalDistance;
+            String algorithm="Christofides";
             //Christofides path
             showTour(tspTour);
 
@@ -70,11 +71,20 @@ public class Main {
             System.out.println("Cost after 2 Optimization: " + twoOptDistance);
             showTour(tspTourCopy);
 
+            if(twoOptDistance<minCost){
+                minCost=twoOptDistance;
+                algorithm="TwoOpt";
+            }
+
             //3-Opt
             ThreeOpt threeOpt = new ThreeOpt();
             double threeOptDistance = threeOpt.threeOptimization(tspTourCopy2);
             System.out.println("Cost after 3 Optimization: " + threeOptDistance);
             showTour(tspTourCopy2);
+            if(threeOptDistance<minCost){
+                minCost=threeOptDistance;
+                algorithm="ThreeOpt";
+            }
 
             //Simulated Annealing
             SimulatedAnnealing simulatedAnnealingObj = new SimulatedAnnealing();
@@ -82,11 +92,17 @@ public class Main {
             double optimizedCost = simulatedAnnealingObj.calculateTotalDistanceAnnealing(optimizedTour);
             System.out.println("Cost after Simulated Annealing: " + optimizedCost);
             showTour(tspTourCopy3);
+            if(optimizedCost<minCost){
+                minCost=optimizedCost;
+                algorithm="Simulated Annealing";
+            }
 
             //Ant Colony Optimization
             TSP.AntColony aco = new TSP.AntColony(tspTourCopy4,400,0.25,10.0,0.5,1,1.0,1000,1,distanceCostMatrix);
             aco.run();
             showTour(tspTourCopy4);
+
+            System.out.println("Best path by "+algorithm+"having cost"+minCost);
         }
     }
     public static double calculateTotalDistance(ArrayList<Integer> resultCircuit, double [][]distanceMatrix) {
